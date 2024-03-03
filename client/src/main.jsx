@@ -12,9 +12,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           Button : {
             colorPrimary : '#CF2E2E',
             colorPrimaryHover : '#CF2E2E',
-            borderRadius : '0px',
+            borderRadius : '2px',
+            boxShadow : 'none',
           }
-        }
+        },
+        token : {
+          borderRadius : '2px',
+          colorPrimary : '#CF2E2E',
+        },
     }}>
       <App />
     </ConfigProvider>
