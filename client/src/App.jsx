@@ -2,11 +2,13 @@ import { Button } from 'antd';
 
 function App() {
   return (
-    <div>
-      <h1>NITian ReStore</h1>
-      <Button type='primary'>
+    <div className="bg-primary h-screen flex justify-center items-center">
+      <div className="bg-white p-5">
+        <h1>NITian ReStore</h1>
+        <Button type='primary'>
         Antd Button
-      </Button>
+        </Button>
+      </div>
     </div>
   )
 }
