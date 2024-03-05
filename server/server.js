@@ -9,6 +9,9 @@ app.use(express.json());
 
 const usersRoute = require('./routes/usersRoute');
 
+const cors = require('cors');
+app.use(cors());
+
 app.use('/api/users', usersRoute);
 
 app.listen(port, () => console.log(`Node/Express Server Started on Port ${port}`));
