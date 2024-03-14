@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import ProtectedPage from "./components/ProtectedPage";
 import Spinner from "./components/Spinner";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const { loading } = useSelector((state) => state.loaders);
@@ -14,6 +15,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ProtectedPage><Home /></ProtectedPage>} />
+            <Route path="/profile" element={<ProtectedPage><Profile /></ProtectedPage>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
           </Routes>
