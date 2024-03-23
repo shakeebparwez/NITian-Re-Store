@@ -6,6 +6,7 @@ import { SetLoader } from "../../../redux/loadersSlice";
 import { GetProducts } from "../../../apicalls/products";
 
 function Products() {
+  const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [products, setProducts] = React.useState([]);
   const [showProductForm, setShowProductForm] = React.useState(false);
   const dispatch = useDispatch();
@@ -56,6 +57,10 @@ function Products() {
             ></i>
             <i
               className="ri-pencil-line"
+              onClick={() => {
+                setSelectedProduct(record);
+                setShowProductForm(true);
+              }}
             ></i>
           </div>
         );
@@ -72,6 +77,7 @@ function Products() {
       <div className="flex justify-end mb-2">
         <Button
           type="default" onClick={() => {
+            setSelectedProduct(null);
             setShowProductForm(true);
           }}
         >
@@ -83,6 +89,8 @@ function Products() {
         <ProductsForm
           showProductForm={showProductForm}
           setShowProductForm={setShowProductForm}
+          selectedProduct={selectedProduct}
+          getData={getData}
         />
       )}
     </div>
