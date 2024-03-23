@@ -28,12 +28,24 @@ export const GetProducts = async () => {
 // edit a product
 export const EditProduct = async (id, payload) => {
     try {
-      const response = await axiosInstance.put(
-        `/api/products/edit-product/${id}`,
-        payload
-      );
-      return response.data;
+        const response = await axiosInstance.put(
+            `/api/products/edit-product/${id}`,
+            payload
+        );
+        return response.data;
     } catch (error) {
-      return error.message;
+        return error.message;
     }
-  };
+};
+
+// delete a product
+export const DeleteProduct = async (id) => {
+    try {
+        const response = await axiosInstance.delete(
+            `/api/products/delete-product/${id}`
+        );
+        return response.data;
+    } catch (error) {
+        return error.message;
+    }
+};
