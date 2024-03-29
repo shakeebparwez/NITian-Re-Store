@@ -84,7 +84,9 @@ router.post(
   async (req, res) => {
     try {
       // upload image to cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path);
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "nitian-restore"
+      });
 
       const productId = req.body.productId;
       await Product.findByIdAndUpdate(productId, {
@@ -96,7 +98,10 @@ router.post(
         data: result.secure_url,
       });
     } catch (error) {
-      
+      res.send({
+        success: false,
+        message: error.message,
+      });
     }
   }
 );
