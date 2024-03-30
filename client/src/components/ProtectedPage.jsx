@@ -51,7 +51,11 @@ function ProtectedPage({ children }) {
           <div className="bg-white py-2 px-5 rounded flex gap-1 items-center">
             <i class="ri-shield-user-line"></i>
             <span className="underline cursor-pointer" onClick={() => {
-              navigate("/profile");
+              if (user.role === "user") {
+                navigate("/profile");
+              } else {
+                navigate("/admin");
+              }
             }}>{user.name}</span>
             <i
               className="ri-logout-box-r-line ml-10"

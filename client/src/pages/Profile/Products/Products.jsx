@@ -7,6 +7,7 @@ import { DeleteProduct, GetProducts } from "../../../apicalls/products";
 import moment from "moment";
 
 function Products() {
+  const { user } = useSelector((state) => state.users);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [products, setProducts] = React.useState([]);
   const [showProductForm, setShowProductForm] = React.useState(false);
@@ -15,7 +16,9 @@ function Products() {
   const getData = async () => {
     try {
       dispatch(SetLoader(true));
-      const response = await GetProducts();
+      const response = await GetProducts({
+        seller: user._id,
+      });
       dispatch(SetLoader(false));
       if (response.success) {
         setProducts(response.data);

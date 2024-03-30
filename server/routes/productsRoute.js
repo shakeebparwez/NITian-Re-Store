@@ -25,7 +25,14 @@ router.post("/add-product", authMiddleware, async (req, res) => {
 // get all products
 router.post("/get-products", async (req, res) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
+    const { seller, category = [], age = [], status } = req.body;
+    
+    let filters = {};
+    if (seller) {
+      filters.seller = seller;
+    }
+
+    const products = await Product.find(filters).sort({ createdAt: -1 });
     res.send({
       success: true,
       data: products,

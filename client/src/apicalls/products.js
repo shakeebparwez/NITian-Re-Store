@@ -14,10 +14,10 @@ export const AddProduct = async (payload) => {
 };
 
 // get all products
-export const GetProducts = async () => {
+export const GetProducts = async (filters) => {
     try {
         const response = await axiosInstance.post(
-            "/api/products/get-products"
+            "/api/products/get-products", filters
         );
         return response.data;
     } catch (error) {
