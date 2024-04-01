@@ -2,7 +2,7 @@ import React from 'react';
 import { Upload, Button, message } from "antd";
 import { useDispatch } from "react-redux";
 import { SetLoader } from "../../../redux/loadersSlice";
-import { UploadProductImage } from "../../../apicalls/products";
+import { EditProduct, UploadProductImage } from "../../../apicalls/products";
 
 function Images({ selectedProduct, setShowProductForm, getData }) {
     const [showPreview = false, setShowPreview] = React.useState(true);
@@ -32,6 +32,28 @@ function Images({ selectedProduct, setShowProductForm, getData }) {
             message.error(error.message);
         }
     }
+
+    const deleteImage = async (image) => {
+        try {
+            const updatedImagesArray = images.filter((img) => img !== image);
+            const updatedProduct = { ...selectedProduct, images: updatedImagesArray };
+            const response = await EditProduct(selectedProduct._id, updatedProduct);
+            if (response.success) {
+                message.success(response.message);
+                setImages(updatedImagesArray);
+                setFile(null);
+                getData();
+            } else {
+                throw new Error(response.message);
+            }
+
+            dispatch(SetLoader(true));
+        } catch (error) {
+            dispatch(SetLoader(false));
+            message.error(error.message);
+        }
+    };
+
     return (
         <div>
             <div className="flex gap-5 mb-5">
@@ -41,7 +63,7 @@ function Images({ selectedProduct, setShowProductForm, getData }) {
                             <img className="h-20 w-20 object-cover" src={image} alt="" />
                             <i
                                 className="ri-delete-bin-line"
-                                onClick={() => {}}
+                                onClick={() => deleteImage(image)}
                             ></i>
                         </div>
                     );
