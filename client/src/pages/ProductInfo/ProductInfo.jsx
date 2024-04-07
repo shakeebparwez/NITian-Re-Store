@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { GetProductById } from "../../apicalls/products";
+import { GetAllBids, GetProductById } from "../../apicalls/products";
 import { SetLoader } from "../../redux/loadersSlice";
 import { Button, message } from "antd";
 import Divider from "../../components/Divider";
@@ -26,7 +26,12 @@ function ProductInfo() {
       const response = await GetProductById(id);
       dispatch(SetLoader(false));
       if (response.success) {
-        setProduct({ ...response.data });
+        const bidsResponse = await GetAllBids({ product: id });
+
+        setProduct({
+          ...response.data,
+          bids: bidsResponse.data,
+        });
       }
     } catch (error) {
       dispatch(SetLoader(false));
