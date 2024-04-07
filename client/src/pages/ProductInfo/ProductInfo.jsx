@@ -157,6 +157,30 @@ function ProductInfo() {
                   New Bid
                 </Button>
               </div>
+
+              {product.showBidsOnProductPage &&
+                product.bids.map((bid) => {
+                  return (
+                    <div className="border border-gray-300 border-solid p-3 rounded mt-5">
+                      <div className="flex justify-between text-gray-700">
+                        <span>Name</span>
+                        <span> {bid.buyer.name}</span>
+                      </div>
+                      <div className="flex justify-between text-gray-600">
+                        <span>Bid Amount</span>
+                        <span>₹ {bid.bidAmount}</span>
+                      </div>
+                      <div className="flex justify-between text-gray-600">
+                        <span>Bid Placed On</span>
+                        <span>
+                          {" "}
+                          {moment(bid.createdAt).format("MMM D , YYYY hh:mm A")}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+
             </div>
           </div>
         </div>
