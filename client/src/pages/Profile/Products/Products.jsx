@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../../redux/loadersSlice";
 import { DeleteProduct, GetProducts } from "../../../apicalls/products";
 import moment from "moment";
+import Bids from "./Bids";
 
 function Products() {
+  const [showBids, setShowBids] = React.useState(false);
   const { user } = useSelector((state) => state.users);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [products, setProducts] = React.useState([]);
@@ -66,6 +68,9 @@ function Products() {
     {
       title: "Status",
       dataIndex: "status",
+      render: (text, record) => {
+        return record.status.toUpperCase();
+      },
     },
     {
       title: "Added On",
@@ -92,6 +97,15 @@ function Products() {
                 setShowProductForm(true);
               }}
             ></i>
+            <span
+              className="underline cursor-pointer"
+              onClick={() => {
+                setSelectedProduct(record);
+                setShowBids(true);
+              }}
+            >
+              Show Bids
+            </span>
           </div>
         );
       }
@@ -121,6 +135,14 @@ function Products() {
           setShowProductForm={setShowProductForm}
           selectedProduct={selectedProduct}
           getData={getData}
+        />
+      )}
+
+      {showBids && (
+        <Bids
+          showBidsModal={showBids}
+          setShowBidsModal={setShowBids}
+          selectedProduct={selectedProduct}
         />
       )}
     </div>
