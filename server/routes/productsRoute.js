@@ -35,6 +35,20 @@ router.post("/get-products", async (req, res) => {
       filters.status = status;
     }
 
+        // filter by category
+        if (category.length > 0) {
+          filters.category = { $in: category };
+        }
+    
+        // filter by age
+        if (age.length > 0) {
+          age.forEach((item) => {
+            const fromAge = item.split("-")[0];
+            const toAge = item.split("-")[1];
+            filters.age = { $gte: fromAge, $lte: toAge };
+          });
+        }
+
     const products = await Product.find(filters).populate("seller").sort({ createdAt: -1 });
     res.send({
       success: true,

@@ -17,10 +17,6 @@ const categories = [
     name: "Sports",
     value: "sports",
   },
-  {
-    name: "Books",
-    value: "books",
-  },
 ];
 
 const ages = [
