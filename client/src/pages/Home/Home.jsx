@@ -86,7 +86,7 @@ function Home() {
                   </p>
                   <Divider />
                   <span className="text-xl font-semibold text-green-700">
-                    $ {product.price}
+                  ₹ {product.price}
                   </span>
                 </div>
               </div>
