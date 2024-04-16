@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function Notifications({
     notifications = [],
@@ -7,6 +8,8 @@ function Notifications({
     showNotifications,
     setShowNotifications,
 }) {
+    const navigate = useNavigate();
+
     return (
         <Modal
             title="Notifications"
@@ -21,6 +24,10 @@ function Notifications({
                     <div
                         className="flex flex-col border border-solid p-2 border-gray-300 rounded cursor-pointer"
                         key={notification._id}
+                        onClick={() => {
+                            navigate(notification.onClick);
+                            setShowNotifications(false);
+                          }}
                     >
 
                         <h1 className="text-gray-700">{notification.title}</h1>

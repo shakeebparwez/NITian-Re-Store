@@ -15,6 +15,20 @@ function ProtectedPage({ children }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const getNotifications = async () => {
+    try {
+      const response = await GetAllNotifications();
+
+      if (response.success) {
+        setNotifications(response.data);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
   const validateToken = async () => {
     try {
       dispatch(SetLoader(true));
@@ -35,6 +49,7 @@ function ProtectedPage({ children }) {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       validateToken();
+      getNotifications();
     } else {
       navigate("/login");
     }
