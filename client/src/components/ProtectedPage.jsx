@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { message } from "antd";
+import { Avatar, Badge, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { GetCurrentUser } from "../apicalls/users";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../redux/loadersSlice";
 import { SetUser } from "../redux/usersSlice";
+import { GetAllNotifications, ReadAllNotifications } from "../apicalls/notifications";
+import Notifications from "./Notifications";
 
 function ProtectedPage({ children }) {
+  const [notifications = [], setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
   const { user } = useSelector((state) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,7 +53,6 @@ function ProtectedPage({ children }) {
           </h1>
 
           <div className="bg-white py-2 px-5 rounded flex gap-1 items-center">
-            <i class="ri-shield-user-line"></i>
             <span className="underline cursor-pointer" onClick={() => {
               if (user.role === "user") {
                 navigate("/profile");
@@ -57,6 +60,21 @@ function ProtectedPage({ children }) {
                 navigate("/admin");
               }
             }}>{user.name}</span>
+            <Badge
+              count={
+                notifications?.filter((notification) => !notification.read)
+                  .length
+              }
+              onClick={() => {
+                setShowNotifications(true);
+              }}
+              className="cursor-pointer"
+            >
+              <Avatar
+                shape="circle"
+                icon={<i className="ri-notification-3-line"></i>}
+              />
+            </Badge>
             <i
               className="ri-logout-box-r-line ml-10"
               onClick={() => {
@@ -69,6 +87,15 @@ function ProtectedPage({ children }) {
 
         {/* body */}
         <div className="p-5">{children}</div>
+
+        {
+          <Notifications
+            notifications={notifications}
+            reloadNotifications={setNotifications}
+            showNotifications={showNotifications}
+            setShowNotifications={setShowNotifications}
+          />
+        }
       </div>
     )
   );
