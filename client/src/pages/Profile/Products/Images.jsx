@@ -77,6 +77,7 @@ function Images({ selectedProduct, setShowProductForm, getData }) {
                     setFile(info.file);
                     setShowPreview(true);
                 }}
+                fileList={file ? [file] : []}
                 showUploadList={showPreview}
             >
                 <Button type="dashed">Upload Image</Button>
