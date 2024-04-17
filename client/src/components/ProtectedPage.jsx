@@ -29,6 +29,19 @@ function ProtectedPage({ children }) {
     }
   };
 
+  const readNotifications = async () => {
+    try {
+      const response = await ReadAllNotifications();
+      if (response.success) {
+        getNotifications();
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
   const validateToken = async () => {
     try {
       dispatch(SetLoader(true));
@@ -81,6 +94,7 @@ function ProtectedPage({ children }) {
                   .length
               }
               onClick={() => {
+                readNotifications();
                 setShowNotifications(true);
               }}
               className="cursor-pointer"
@@ -106,7 +120,7 @@ function ProtectedPage({ children }) {
         {
           <Notifications
             notifications={notifications}
-            reloadNotifications={setNotifications}
+            reloadNotifications={getNotifications}
             showNotifications={showNotifications}
             setShowNotifications={setShowNotifications}
           />
