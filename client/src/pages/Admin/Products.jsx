@@ -75,7 +75,10 @@ function Products() {
         {
             title: "Category",
             dataIndex: "category",
-        },
+            render: (text, record) => {
+              return record.category.toUpperCase();
+            },
+          },
         {
             title: "Age",
             dataIndex: "age",
